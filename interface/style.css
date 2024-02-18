@@ -1,0 +1,205 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Anta&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Protest+Guerrilla&display=swap');
+
+
+
+
+.color{
+
+    --Primary-color: #265073;
+    --extra-color: #2D9596;
+    --Secondary-color: #78cbb5;
+    --Background: #f2f5eb;
+}
+
+
+body{
+    margin:0px;
+    padding:0px;
+    font-family: "Anta", sans-serif;
+    background-color: var(--Background);
+    font-size:16px;
+    color:var(--Secondary-color);
+
+}
+
+
+/* Nav Bar */
+
+nav{
+    font-family: "Protest Guerrilla", sans-serif;
+    display: flex;
+    justify-content:space-around;
+    align-items: baseline;
+    color:var(--Primary-color);
+
+
+}
+
+nav h1{
+    font-size: 30px;
+}
+nav p{
+    padding-left:10px;
+   
+    font-family:  "Anta", sans-serif;;
+}
+
+.branding{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+}
+
+.Buttons button{
+    padding:13px 23px;
+    margin: 0px 10px;
+    border: 0px;
+    border-radius: 4px;
+    color:white;
+    font-size:14px;
+    background-color:var(--Primary-color);
+    box-shadow: 5px 5px var(--Secondary-color);
+}
+
+
+
+
+/* Drop container */
+
+.dropcontainer{
+
+ width:auto;
+ display: flex;
+ justify-content: center;
+ padding:100px;
+
+
+}
+
+.drop_info{
+
+    padding:100px 350px;
+    border:2px solid var(--Primary-color);
+    border-radius: 10px;
+    border-style: dashed;
+    
+}
+.drop_info h1{
+
+    font-size:50px;
+    padding:0px;
+    margin:0px;
+}
+
+.drop_info p{
+    margin:0px;
+    padding:0px;
+}
+
+
+/* Container */
+
+
+
+
+/* SignINBox */
+
+.SignInbox{
+ 
+  
+    display: flex;
+    justify-content: center;
+    margin-bottom:50px;
+    width:auto;
+   
+} 
+
+.inputBox{
+
+   
+ padding:50px 270px;
+ border-radius: 5px;
+ box-shadow: 5px 5px var(--Secondary-color);
+
+}
+
+.SignInbox input,.contentBox input{
+
+    margin-bottom:35px;
+   
+    height:25px;
+    width:350px;
+    display: block;
+    border:0px;
+    border-radius: 5px;
+    padding:10px 0px;
+    padding-left:10px;
+    box-shadow: 5px 5px var(--Secondary-color);
+
+
+}
+.SignInbox p, .contentBox p{
+    margin:0px;
+    margin-bottom:50px;
+    padding:0px;
+   
+}
+
+/* Content */
+
+.content{
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom:100px;
+   
+
+}
+
+.contentBox{
+    box-shadow: -5px 5px var(--Secondary-color);
+    padding:40px 60px;
+}
+
+
+
+
+.contentBox label{
+    color:var(--Primary-color);
+
+}
+
+.textareaContainer textarea{
+    display:flex;
+    resize: none;
+    border:none;
+    border-radius: 5px;
+    padding:10px;
+    outline:none;
+}
+
+
+footer{
+
+    padding:20px 0px 5px 0px;
+
+    
+}
+
+.hidden{
+    display: none;
+}
+
+/* Hover Effect */
+.button:hover{
+    box-shadow: 3px 3px var(--Secondary-color);
+    font-size:13.5px;
+}
+
+.drop_info:hover{
+
+    border-color: var(--Secondary-color);
+}
