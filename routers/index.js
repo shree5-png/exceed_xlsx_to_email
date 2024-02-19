@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const {SendMail } = require("../controllers/index");
+const {getMailFile,getUserData} = require("../controllers/index");
 
-router.route("/sendmail").post(SendMail);
-
+router.route("/emailfile").post(getMailFile);
+// router.route("/userfile").post(getUserData);
+router.post("/userfile", getUserData)
 module.exports = router;
