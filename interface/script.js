@@ -1,5 +1,6 @@
 "use strict"
 
+
 const drag_info = document.querySelector(".drop_info");
 const dropfile_button = document.querySelector("#dropfile_button");
 const sendmail_button = document.querySelector("#sendmail_button");
@@ -31,9 +32,35 @@ const draganddropFeature = ()=>{
 
     const fileHandling = (e)=>{
 
-       const file = e.dataTransfer.files[0]
-       console.log(file);
+    
 
+    //    e.stopPropagation();
+       let files = e.dataTransfer.files[0];
+      
+       let reader = new FileReader();
+       reader.readAsArrayBuffer(files);
+
+       reader.onload = (e)=>{
+
+        const data = new Uint8Array(e.target.result);
+        const workbook = XLSX.read(data,{type:"array"});
+       
+
+        let first_sheet_name = workbook.SheetNames[0];
+     
+        let worksheet = workbook.Sheets[first_sheet_name];
+       
+        let json = XLSX.utils.sheet_to_json(worksheet);
+
+        console.log(json);
+
+        json.forEach(each=>{
+
+
+            const actualEmail = each.email || each.Email;
+            console.log(actualEmail);
+        })
+       };
     }
     
 
@@ -63,10 +90,6 @@ const draganddropFeature = ()=>{
 };
 
 draganddropFeature();
-
-
-
-
 
 
 
