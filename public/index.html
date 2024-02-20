@@ -27,7 +27,7 @@
 
     <div class="branding">
         <h1>Exceed</h1>
-        <p>Like never before</p>
+        <p class="brandingP">Like never before</p>
     </div>
 
    <div class="Buttons">
@@ -42,9 +42,14 @@
 <!-- DropDown container -->
 <div class="dropcontainer">
 
-    <div class="drop_info">
+    <div class="drop_info dropclass ">
         <h1>Drop</h1>
         <p>Your excel.XLSX files here</p>
+    </div>
+
+    <div class="drop_mail_box dropclass hidden ">
+        <h1 style="color:var(--Primary-color)">To</h1>
+        <p class="mail_list"></p>
     </div>
 </div>
 
@@ -57,7 +62,7 @@
 <div class="SignInbox">
 
     <div class="inputBox">
-        <p>Wait waits noone, be a sender, be a Starter!</p>
+        <p>Wait waits noone, be a Starter!</p>
         <label for="senderEmail" style="color:var(--Primary-color)">From </label>
         <input type="text" name="" id="senderEmail" placeholder=" Enter your Email Here" onblur="handleInput(`senderEmail`)" >
         <input type="text" name="" id="senderPass" placeholder=" Application password" onblur="handleInput(`senderP`)">

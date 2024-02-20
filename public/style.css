@@ -12,6 +12,7 @@
     --extra-color: #2D9596;
     --Secondary-color: #78cbb5;
     --Background: #f2f5eb;
+    --error-color:#dc143c85;
 }
 
 
@@ -72,31 +73,56 @@ nav p{
 .dropcontainer{
 
  width:auto;
+ height:200px;
  display: flex;
  justify-content: center;
+ align-items: center;
  padding:100px;
-
 
 }
 
-.drop_info{
 
-    padding:100px 350px;
+
+.dropclass{
+
+    padding:50px 350px;
     border:2px solid var(--Primary-color);
     border-radius: 10px;
     border-style: dashed;
-    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height:150px;
+    width:auto;
+
+    overflow: auto;
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+   scrollbar-width: none;  /* Firefox */
+     
 }
-.drop_info h1{
+
+.dropclass::-webkit-scrollbar { 
+    display: none;  /* Safari and Chrome */
+}
+
+.drop_mail_box{
+
+  
+    padding:50px 20px;
+
+}
+.dropclass h1{
 
     font-size:50px;
     padding:0px;
     margin:0px;
 }
 
-.drop_info p{
+.dropclass p{
     margin:0px;
     padding:0px;
+     
 }
 
 
@@ -196,10 +222,17 @@ footer{
 /* Hover Effect */
 .button:hover{
     box-shadow: 3px 3px var(--Secondary-color);
-    font-size:13.5px;
 }
 
-.drop_info:hover{
+.button:active{
+
+    box-shadow: 1px 1px var(--Secondary-color);
+    font-size: 13.5px;
+
+}
+
+.dropclass:hover{
 
     border-color: var(--Secondary-color);
 }
+

@@ -13,6 +13,11 @@ const senderP = document.querySelector("#senderPass")
 const subjectInput = document.querySelector("#subjectInput");
 const mailbox = document.querySelector("#mailbox");
 
+const drop_mail_box = document.querySelector(".drop_mail_box");
+const drop_mail_list = document.querySelector(".mail_list");
+
+const brandingP = document.querySelector(".brandingP");
+
 
 let mailArray = [];
 // To validate email, compare with regex on NOTE client side
@@ -66,6 +71,13 @@ const draganddropFeature = ()=>{
 
     //    e.stopPropagation();
        let files = e.dataTransfer.files[0];
+       
+       if(files.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
+
+        console.log("File format doesnot matches, Try again");
+        clearDropFiled();
+        return;
+       }
       
        let reader = new FileReader();
        reader.readAsArrayBuffer(files);
@@ -115,6 +127,13 @@ const draganddropFeature = ()=>{
 
         // Sending array of the data(mail from spreadsheet) to the server
         if(mailArray.length != 0 && mailArray){
+
+            // For showing To and emails in the front end
+            drag_info.classList.add("hidden");
+            drop_mail_box.classList.remove("hidden");
+            drop_mail_list.textContent = mailArray.toString().split(",").join("  ,  ").toString();
+            // 
+
             fetch("/api/emailfile", {method: "POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(mailArray)})
             .then(response=>response.json())
             .then(data=>console.log(data))
@@ -135,6 +154,7 @@ const draganddropFeature = ()=>{
         drag_info.addEventListener(each,prevent);
 
     });
+
 
 
 //when entering
@@ -158,6 +178,8 @@ draganddropFeature();
 
 
 
+
+
 //Object where user input data are stored
 let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
 
@@ -176,8 +198,12 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
 
                 UserData.fromEmail = senderEmail.value;
                 console.log(UserData);
+
+                senderEmail.style.cssText = "box-shadow: 5px 5px var(--Secondary-color);";
             }else{
                 console.log("Email is not valid, PLease Check again")
+                senderEmail.style.cssText = "box-shadow: 5px 5px var(--error-color);";
+               
             }
            
         }
@@ -219,8 +245,49 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
 
     });
 
+// Timeout function
+
+const backto_normal = ()=>{
+setTimeout(()=>{
+    
+    drag_info.style.cssText = "color:var(--Secondary-color); border-color:var(--Secondary-color);"
+   }, 800);
+}
+
+// Onclicking drop file button
+    const clearDropFiled = ()=>{
+        if(mailArray.length != 0 ){
+
+            mailArray.length = 0;
+              // For showing To in the front end
+              drag_info.classList.remove("hidden");
+              drop_mail_box.classList.add("hidden");
+              drag_info.style.cssText = "border-color:var(--Primary-color);"
+              // 
+        }else{
+            drag_info.style.cssText = "color:var(--error-color); border-color:var(--error-color);";
+            // backto_normal();
+          
+            console.log("Drag and Drop your file first");
+        }
+        backto_normal();
+    }
+
+
+    dropfile_button.addEventListener("click",clearDropFiled);
 
 
 
+    //for interactive headlines in navigation bar
+    const punchLine = ()=>{
+
+       const lines =  ["like never before", "hard as you can", "till brains out", "like ex deeds ", "like good seed"];
+    
+       const randomNumber = Math.floor(Math.random() * (lines.length - 0));
+
+       brandingP.textContent = lines[randomNumber];
 
 
+    }
+
+   document.addEventListener("DOMContentLoaded", punchLine);
