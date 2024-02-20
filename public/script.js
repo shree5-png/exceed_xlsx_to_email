@@ -14,20 +14,18 @@ const subjectInput = document.querySelector("#subjectInput");
 const mailbox = document.querySelector("#mailbox");
 
 
-
-// To validate email, compare with regex
+let mailArray = [];
+// To validate email, compare with regex on NOTE client side
 const validateEmail = (email)=>{
 
    
     try {
-
-        if(email === ""){return true;}else{
-
+        // return true;
             return String(email)
             .toLowerCase()
             .match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
             
-        }
+        
     } catch (error) {
 
         console.log(error);
@@ -86,39 +84,44 @@ const draganddropFeature = ()=>{
 
         console.log(json);
 
-        const mailArray = [];
+        // const mailArray = [];
         json.forEach(each=>{
 
 
-            const email = each.email || each.Email;
-            
-            
-            if(validateEmail(email)){
+            const email = each.email || each.Email; 
 
+            if(!email){
+                return;
+            }
+            if(validateEmail(email)){
 
                 mailArray.push(each.email || each.Email) ;
                 
             }else{
-                console.log("Some of your email is not valid in spreadsheet, PLease Check again")
+                console.log("Some of your email is not valid in spreadsheet and are skipped, PLease Check again");
+                
             }
+        }
+        );
 
-
-        });
-
-        // const mailObject = {...mailArray};
-        // console.log(mailObject);
+    
 
         console.log(mailArray);
 
+        if(!mailArray){
+            console.log("File is not dropped yet!");
+            return;
+        }
+
         // Sending array of the data(mail from spreadsheet) to the server
-        if(mailArray != []){
+        if(mailArray.length != 0 && mailArray){
             fetch("/api/emailfile", {method: "POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(mailArray)})
             .then(response=>response.json())
             .then(data=>console.log(data))
             .catch(error=>console.log(error));
 
         }else{
-            console.log("Spreadsheet's email are empty")
+            console.log("Spreadsheet's Email not found, Title should be: [email or Email]")
         }
 
        
@@ -167,6 +170,8 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
         
         if(param == "senderEmail"){
 
+            
+
             if(validateEmail(senderEmail.value)){
 
                 UserData.fromEmail = senderEmail.value;
@@ -199,7 +204,7 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
     sendmail_button.addEventListener("click", (e)=>{
         e.preventDefault();
 
-        if(UserData.fromEmail != ""  && UserData.fromP != "" && UserData.subject != "" && UserData.mail != ""){
+        if(UserData.fromEmail != ""  && UserData.fromP != "" && UserData.subject != "" && UserData.mail != "" && mailArray.length != 0){
 
 
             fetch("/api/userfile" ,{method: "POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(UserData)})

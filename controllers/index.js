@@ -13,43 +13,84 @@ let user_name;
 // spreadsheet mail
 let receivers_mail;
 
+
+
+// To validate email, compare with regex NOTE server side
+const validateEmail = (email)=>{
+
+   
+  try {
+        return String(email)
+        .toLowerCase()
+        .match( /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        
+  } catch (error) {
+
+     res.status(400);
+     throw new Error("Bad request, Please Check!")
+      
+  }
+}
+
 const getMailFile =__async( async (req,res)=>{
 
-  //  to_user_data = req.body;
+
+
+  //checking if the req from client is empty
+  console.log(req.body)
+  if(req.body == undefined || req.body == ""){
+
+    res.status(404);
+    throw new Error("Your request Not found : Empty request. Try again");
+    
+  }
+
+  //checking for each email client sent by is valid
+  req.body.forEach(each=>{
+
+    if(!each){
+      return;
+    }
+  
+    //validating email in server side also
+    if(!validateEmail(each)){
+
+    
+      res.status(403);
+      throw new Error("Some emails in spreadsheet did not satisfy the standard");
+    }
+  })
 
   receivers_mail = req.body;
   console.log(receivers_mail);
 
-  res.status(200).json({message:"got Mails"})
+  res.status(200).json({message:"Spreadsheet validation : OK"});
 });
 
 //@method POST
 //access public
-const getUserData = __async( async (req,res)=>{
+const getUserData = __async(async (req,res,next)=>{
 
-  //  from_user_data = req.body;
-  //  console.log(from_user_data);
-
-  
   const user_info = req.body;
   sender_mail = user_info.fromEmail; 
   sender_pass = user_info.fromP;
 
   subject = user_info.subject
   mail = user_info.mail;
-  console.log(mail)
 
+  if(!user_info || !sender_mail || !sender_pass || !subject || !mail || !receivers_mail){
+    res.status(400);
+    throw new Error("Some input fields found empty!, Try again");
+  }
 
-  user_name = sender_mail.split("@")[0];
- 
-  sendMail();
-  res.status(200).json({message: "Got user Data"})
+  // res.status(200).json({message: "Got user Data"})     //response is sent in next middleware
+  next();
 
 });
 
 
 
-const sendMail = ()=>{
+const sendMail = (req,res)=>{
 
 
 //NodeMailer
@@ -63,19 +104,22 @@ var transporter = nodemailer.createTransport({
 
 var mailOptions = {
   from: sender_mail,
+  // to:`${receivers_mail.toString()}`,
   bcc: `${receivers_mail.toString()}`,
   subject: subject,
-  // text: 'That was easy!'
+  // html: 'That was easy!'
   text : mail
 };
 
 transporter.sendMail(mailOptions, function(error, info){
   if (error) {
+    res.status(403).json({Message:"ERROR", Error: error })
     console.log(error);
   } else {
-    console.log('Email sent: ' + info.response);
+    res.status(200).json({Message: "Email sent : OK"})
+    // console.log('Email sent: ' + info.response);
   }
 });
 
 }
-module.exports = {getMailFile,getUserData,};
+module.exports = {getMailFile,getUserData,sendMail};

@@ -11,8 +11,12 @@ const errorHandle = (err,req,res,next)=>{
             res.json({Title: "Request Not Found, ERROR:404", Message: err.message, stackTrace : err.stackTrace});
             break;
 
+        case 403:
+            res.json({Title: "Validation Error, ERROR:403", Message : err.message , stackTrace : err.stackTrace});
+            break;
+
         case 400:
-            res.json({Title: "Validation Error, ERROR:400", Message : err.message , stackTrace : err.stackTrace});
+            res.json({Title: "Bad Request, ERROR:400", Message : err.message , stackTrace : err.stackTrace});
             break;
 
         case 500:
