@@ -47,7 +47,7 @@ const validateEmail = (email)=>{
 
 // Timeout function
 
-const backto_normal = (param= "dropbox",time=800)=>{
+const backto_normal = (param= "dropbox",time=1500)=>{
 
     function setTimeFn(elem, info, time){
 
@@ -84,7 +84,7 @@ const backto_normal = (param= "dropbox",time=800)=>{
 
 const showMessageBox = ()=>{
     info_dropdown.classList.remove("hidden");
-    backto_normal("error",7000);
+    backto_normal("error",7900);
 }
 
 
@@ -413,11 +413,11 @@ const MakeInfoStall = ()=>{
 const manageInfo = ()=>{
 
     // console.log(scrollY)
-if( scrollY >= 120 && scrollY <= 170){
+if( scrollY >= 110 && scrollY <= 410){
 
     MakeInfoStall();
     
-}else if(scrollY >=550 && scrollY <= 720){
+}else if(scrollY >=540 && scrollY <= 850){
 
     MakeInfoStall();
 }
