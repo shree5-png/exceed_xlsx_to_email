@@ -12,6 +12,7 @@
     --extra-color: #2D9596;
     --Secondary-color: #78cbb5;
     --Background: #f2f5eb;
+    --Info-background: #78cbb577;
     --error-color:#dc143c85;
 }
 
@@ -140,6 +141,7 @@ nav p{
     justify-content: center;
     margin-bottom:50px;
     width:auto;
+    align-items: center;
    
 } 
 
@@ -187,7 +189,8 @@ nav p{
 
 .contentBox{
     box-shadow: -5px 5px var(--Secondary-color);
-    padding:40px 60px;
+    padding:40px 0px 40px 15px;
+
 }
 
 
@@ -219,9 +222,53 @@ footer{
     display: none;
 }
 
+
+.info_container{
+    position: fixed;
+    /* display: inline-block; */
+    right:290px;
+    cursor: pointer;
+    align-items: center;
+    /* margin-left:10px; */
+    
+
+  
+    
+}
+
+.info_button{
+
+    font-weight:900;
+    font-size:30px;
+    color: var(--Info-background);
+
+
+}
+
+.info_dropdown{
+
+    
+    position:absolute;
+    background-color: var(--Background);
+    min-width:280px;
+    min-height:90px;
+
+    padding:5px 0px 5px 5px;
+    border-radius: 10px;
+
+    box-shadow:3px 3px var(--Secondary-color);
+    border:2px solid var(--Secondary-color);
+
+    /* margin-left: 5px; */
+    font-size:14px;
+    text-overflow: clip;
+   
+}
+
+
 /* Hover Effect */
 .button:hover{
-    box-shadow: 3px 3px var(--Secondary-color);
+    box-shadow: 3px 3px var(--Secondary-color) ;
 }
 
 .button:active{
@@ -233,6 +280,6 @@ footer{
 
 .dropclass:hover{
 
-    border-color: var(--Secondary-color);
+    border-color: var(--Secondary-color) !important ;
 }
 

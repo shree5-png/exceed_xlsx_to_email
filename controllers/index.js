@@ -55,7 +55,6 @@ const getMailFile =__async( async (req,res)=>{
     //validating email in server side also
     if(!validateEmail(each)){
 
-    
       res.status(403);
       throw new Error("Some emails in spreadsheet did not satisfy the standard");
     }
@@ -64,7 +63,7 @@ const getMailFile =__async( async (req,res)=>{
   receivers_mail = req.body;
   console.log(receivers_mail);
 
-  res.status(200).json({message:"Spreadsheet validation : OK"});
+  res.status(200).json({Message:"Spreadsheet validation : OK", ok:true});
 });
 
 //@method POST
@@ -113,11 +112,12 @@ var mailOptions = {
 
 transporter.sendMail(mailOptions, function(error, info){
   if (error) {
-    res.status(403).json({Message:"ERROR", Error: error })
-    console.log(error);
+  
+    res.status(403).json({Message:"Authentication Failed, Please check your password or email"});
+   
   } else {
     res.status(200).json({Message: "Email sent : OK"})
-    // console.log('Email sent: ' + info.response);
+   
   }
 });
 

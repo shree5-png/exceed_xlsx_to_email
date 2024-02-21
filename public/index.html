@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exceed</title>
+    <title>Exceed | Send Email</title>
 
     <link rel="stylesheet" href="./style.css">
 
@@ -46,11 +46,19 @@
         <h1>Drop</h1>
         <p>Your excel.XLSX files here</p>
     </div>
-
     <div class="drop_mail_box dropclass hidden ">
         <h1 style="color:var(--Primary-color)">To</h1>
         <p class="mail_list"></p>
     </div>
+
+    <!-- Info container  -->
+    <div class="info_container">
+        <span class="info_button">  *  </span>
+        <div class="info_dropdown hidden">
+            <p class="info_text">Info: Make sure your spreadsheet column title be "email" or "Email"</p>
+        </div>
+    </div>
+
 </div>
 
 <!-- Container main -->
@@ -68,7 +76,18 @@
         <input type="text" name="" id="senderPass" placeholder=" Application password" onblur="handleInput(`senderP`)">
     </div>
 
-</div>   
+     <!-- Info container  -->
+ <!-- <div class="info_container info_from">
+    <span class="info_button">  *  </span>
+    <div class="info_dropdown hidden">
+        <p class="info_text">Info: Make sure your spreadsheet column title be "email" or "Email"</p>
+    </div>
+</div> -->
+
+  
+
+</div>  
+
 
 
 <div class="content">
@@ -92,6 +111,13 @@
             
     
         </div>
+          <!-- Info container  -->
+    <!-- <div class="info_container">
+        <span class="info_button">  *  </span>
+        <div class="info_dropdown hidden">
+            <p class="info_text">Info: Make sure your spreadsheet column title be "email" or "Email"</p>
+        </div>
+    </div> -->
     
 </div>
 

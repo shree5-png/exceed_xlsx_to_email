@@ -17,6 +17,11 @@ const drop_mail_box = document.querySelector(".drop_mail_box");
 const drop_mail_list = document.querySelector(".mail_list");
 
 const brandingP = document.querySelector(".brandingP");
+const info_container = document.querySelector(".info_container");
+const info_dropdown = document.querySelector(".info_dropdown");
+
+const dropclass = document.querySelector(".dropclass");
+const info_text = document.querySelector(".info_text");
 
 
 let mailArray = [];
@@ -37,6 +42,63 @@ const validateEmail = (email)=>{
         return;
         
     }
+};
+
+
+// Timeout function
+
+const backto_normal = (param= "dropbox",time=800)=>{
+
+    function setTimeFn(elem, info, time){
+
+    setTimeout(()=>{
+        
+        elem.style.cssText = info;
+
+        if(param == "error"){
+            info_text.textContent =`Information will be shown here`;
+            info_dropdown.classList.add("hidden");
+        }
+
+        
+
+       }, time);
+
+       
+    }
+
+    if(param == "dropbox"){
+        setTimeFn(drag_info,"color:var(--Secondary-color); border-color:var(--Primary-color);",time)
+
+    }
+
+    if(param == "error"){
+        setTimeFn(info_dropdown, "box-shadow: 5px 5px var(--Secondary-color);" ,time);
+        
+    }
+
+    }
+
+   
+        
+
+const showMessageBox = ()=>{
+    info_dropdown.classList.remove("hidden");
+    backto_normal("error",7000);
+}
+
+
+const showError= (status,message)=>{
+
+
+    info_text.textContent =`Info: ${message}`;
+
+    if(status == "error"){
+
+        info_dropdown.style.cssText = "box-shadow: 5px 5px var(--error-color);";
+    }
+    showMessageBox();
+
 }
 
 
@@ -74,7 +136,10 @@ const draganddropFeature = ()=>{
        
        if(files.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
 
+        
+        // NOTE
         console.log("File format doesnot matches, Try again");
+        showError("error","File format doesnot matches, Try again");
         clearDropFiled();
         return;
        }
@@ -94,6 +159,7 @@ const draganddropFeature = ()=>{
        
         let json = XLSX.utils.sheet_to_json(worksheet);
 
+        // NOTE
         console.log(json);
 
         // const mailArray = [];
@@ -110,7 +176,9 @@ const draganddropFeature = ()=>{
                 mailArray.push(each.email || each.Email) ;
                 
             }else{
+                // NOTE
                 console.log("Some of your email is not valid in spreadsheet and are skipped, PLease Check again");
+                showError("error","Some of your email is not valid in spreadsheet and are skipped, PLease Check again");
                 
             }
         }
@@ -121,7 +189,9 @@ const draganddropFeature = ()=>{
         console.log(mailArray);
 
         if(!mailArray){
+            // NOTE
             console.log("File is not dropped yet!");
+            showError("error","File is not dropped yet!")
             return;
         }
 
@@ -135,11 +205,32 @@ const draganddropFeature = ()=>{
             // 
 
             fetch("/api/emailfile", {method: "POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(mailArray)})
-            .then(response=>response.json())
-            .then(data=>console.log(data))
-            .catch(error=>console.log(error));
+            .then(response=>{
+
+                if(!response.ok){
+                    return response.json().then(data=>{throw data});
+                }
+
+                  return response.json();
+
+                }
+            )
+            .then(data=>{
+                 // NOTE
+                 console.log("data", data);
+        
+                 showError("info",`${data.Message}`);}
+                )
+            .catch(error=>{
+                
+                console.log("error",error);
+                 showError("error",`${error.Message}`)
+            }
+                );
 
         }else{
+            // NOTE
+            showError("error","Spreadsheet's Email not found, Title should be: [email or Email]");
             console.log("Spreadsheet's Email not found, Title should be: [email or Email]")
         }
 
@@ -197,10 +288,14 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
             if(validateEmail(senderEmail.value)){
 
                 UserData.fromEmail = senderEmail.value;
+                // NOTE
                 console.log(UserData);
 
                 senderEmail.style.cssText = "box-shadow: 5px 5px var(--Secondary-color);";
+                backto_normal("error",0);
             }else{
+                 // NOTE
+            showError("error","Email is not valid, PLease Check again");
                 console.log("Email is not valid, PLease Check again")
                 senderEmail.style.cssText = "box-shadow: 5px 5px var(--error-color);";
                
@@ -210,6 +305,7 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
 
         if(param =="senderP"){
             UserData.fromP = senderP.value;
+            // NOTE
             console.log(UserData);
         }
 
@@ -234,43 +330,55 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
 
 
             fetch("/api/userfile" ,{method: "POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(UserData)})
-            .then(response=>response.json())
-            .then(data=>console.log(data))
-            .catch(error=>console.log(error));
+            .then(response=>{
+
+                if(!response.ok){
+                    return response.json().then(data=>{throw data});
+                }
+               return response.json()
+            })
+        .then(data=>{
+             // NOTE
+             console.log(data)
+            showError("info",`${data.Message}`)
+        })
+            .catch(error=>{
+
+                console.log(error);
+                 // NOTE
+                 showError("error",`${error.Message}`)
+              }
+                );
 
         }else{
-            console.log("No Inputs are supposed to be blank");
+          
+        
+                 // NOTE
+                 showError("error","No Inputs are supposed to be blank");
+            // console.log("No Inputs are supposed to be blank");
             return;
         }
 
     });
 
-// Timeout function
 
-const backto_normal = ()=>{
-setTimeout(()=>{
-    
-    drag_info.style.cssText = "color:var(--Secondary-color); border-color:var(--Secondary-color);"
-   }, 800);
-}
 
 // Onclicking drop file button
     const clearDropFiled = ()=>{
         if(mailArray.length != 0 ){
 
-            mailArray.length = 0;
-              // For showing To in the front end
+              mailArray.length = 0;
               drag_info.classList.remove("hidden");
               drop_mail_box.classList.add("hidden");
-              drag_info.style.cssText = "border-color:var(--Primary-color);"
-              // 
+           
         }else{
             drag_info.style.cssText = "color:var(--error-color); border-color:var(--error-color);";
-            // backto_normal();
-          
+            backto_normal();
+                  // NOTE
+                  showError("error","Drag and Drop your file first");
             console.log("Drag and Drop your file first");
         }
-        backto_normal();
+    
     }
 
 
@@ -280,6 +388,7 @@ setTimeout(()=>{
 
     //for interactive headlines in navigation bar
     const punchLine = ()=>{
+        
 
        const lines =  ["like never before", "hard as you can", "till brains out", "like ex deeds ", "like good seed"];
     
@@ -291,3 +400,43 @@ setTimeout(()=>{
     }
 
    document.addEventListener("DOMContentLoaded", punchLine);
+
+
+
+const MakeInfoStall = ()=>{
+
+    let currentTop = info_container.getBoundingClientRect().top;
+    info_container.style.cssText = `position:absolute; top:${currentTop + window.scrollY}px`
+   }
+
+
+const manageInfo = ()=>{
+
+    // console.log(scrollY)
+if( scrollY >= 120 && scrollY <= 170){
+
+    MakeInfoStall();
+    
+}else if(scrollY >=550 && scrollY <= 720){
+
+    MakeInfoStall();
+}
+else{
+    info_container.style.cssText = "position:fixed;"
+}
+    
+}
+
+window.addEventListener("scroll", manageInfo);
+
+
+
+
+info_container.addEventListener("click",()=>{
+    info_dropdown.classList.toggle("hidden");
+})
+
+
+
+
+
