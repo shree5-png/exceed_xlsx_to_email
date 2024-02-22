@@ -24,7 +24,8 @@ const dropclass = document.querySelector(".dropclass");
 const info_text = document.querySelector(".info_text");
 
 
-let mailArray = [];
+let mailArray;
+let mailSet = new Set();
 // To validate email, compare with regex on NOTE client side
 const validateEmail = (email)=>{
 
@@ -173,7 +174,9 @@ const draganddropFeature = ()=>{
             }
             if(validateEmail(email)){
 
-                mailArray.push(each.email || each.Email) ;
+               
+                mailSet.add(email)
+                // mailArray.push(email);
                 
             }else{
                 // NOTE
@@ -181,12 +184,13 @@ const draganddropFeature = ()=>{
                 showError("error","Some of your email is not valid in spreadsheet and are skipped, PLease Check again");
                 
             }
+            mailArray = Array.from(mailSet);
         }
+       
         );
 
     
 
-        console.log(mailArray);
 
         if(!mailArray){
             // NOTE
@@ -355,7 +359,7 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
         
                  // NOTE
                  showError("error","No Inputs are supposed to be blank");
-            // console.log("No Inputs are supposed to be blank");
+           
             return;
         }
 

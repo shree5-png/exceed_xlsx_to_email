@@ -13,6 +13,8 @@ let user_name;
 // spreadsheet mail
 let receivers_mail;
 
+let mail_set = new Set();
+
 
 
 // To validate email, compare with regex NOTE server side
@@ -37,7 +39,7 @@ const getMailFile =__async( async (req,res)=>{
 
 
   //checking if the req from client is empty
-  console.log(req.body)
+  // console.log(req.body)
   if(req.body == undefined || req.body == ""){
 
     res.status(404);
@@ -60,8 +62,18 @@ const getMailFile =__async( async (req,res)=>{
     }
   })
 
-  receivers_mail = req.body;
-  console.log(receivers_mail);
+  req.body.forEach(e=>{
+
+    mail_set.add(e);
+  })
+  
+  receivers_mail = Array.from(mail_set)
+
+ 
+  // console.log(mail_set);
+  // console.log(receivers_mail);
+
+ 
 
   res.status(200).json({Message:"Spreadsheet validation : OK", ok:true});
 });
