@@ -7,7 +7,7 @@
 
 ## Get Started
 
-`Install this Github repo: [click here](https://github.com/shree5-png/exceed_xlsx_to_email.git)`<br>
+`Install this Github repo:` [click here](https://github.com/shree5-png/exceed_xlsx_to_email.git)<br>
 
 >**Setup**
 
