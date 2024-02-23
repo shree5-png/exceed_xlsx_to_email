@@ -2,16 +2,20 @@
 
 *Exceed is an interactive web app, where you can send an email to multiple people listed on your spreadsheet file, Just drag and drop. To,From,Subject,Mail -> all yours, just enter.*
 
+![Images](readme_img.png)<br>
 
-## Get Started<br>
+
+## Get Started
 
 `Install this Github repo: `<br>
 
->**Setup**<br>
+>**Setup**
+
 `npm install`<br>
 `npm start`<br>
 
 >**Run**
+
 `localhost:5000`<br>
 
 
@@ -19,9 +23,9 @@
 
 ## Notes
 
-**Make sure the title of spreadsheet column that contains emails should be `emails` or `Email`**<br><br>
+*Make sure the title of spreadsheet column that contains emails should be `emails` or `Email`*<br><br>
 
-**App Password : app pass is not the regular password of your email, but you can find it in the security section of your email manage section, [here is the guide to find it](https://youtu.be/lSURGX0JHbA?si=KWbn7gl8J3L_IxSI)**
+**App Password** : *app pass is not the regular password of your email, but you can find it in the security section of your email manage section, [here is the guide to find it](https://youtu.be/lSURGX0JHbA?si=KWbn7gl8J3L_IxSI)*
 
 
 
