@@ -26,7 +26,7 @@
 
 >*Make sure the title of spreadsheet column that contains emails should be `emails` or `Email`*<br><br>
 
-**App Password** : *app pass is not the regular password of your email, but you can find it in the security section of your email manage section, [here is the guide to find it](https://youtu.be/lSURGX0JHbA?si=KWbn7gl8J3L_IxSI)*
+**App Password** : *app pass is not the regular password of your email, but you can find it in the `Manage your Google Account` ->  `Security` ->  `2-Step Verification` ->  `App password`, [here is the guide to find it](https://youtu.be/lSURGX0JHbA?si=KWbn7gl8J3L_IxSI)*
 
 
 
