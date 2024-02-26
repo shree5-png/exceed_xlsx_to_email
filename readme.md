@@ -9,6 +9,10 @@
 
 `Install this Github repo:` [click here](https://github.com/shree5-png/exceed_xlsx_to_email/archive/refs/heads/main.zip)<br>
 
+*or*<br>
+
+`Git clone https://github.com/shree5-png/exceed_xlsx_to_email.git`<br>
+
 >**Setup**
 
 `npm install`<br>
