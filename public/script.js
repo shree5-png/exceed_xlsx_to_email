@@ -1,5 +1,7 @@
 "use strict"
 
+// const {mailsArraytoServer} = require("./api.js");
+import { mailsArraytoServer, sendMailToServer} from "./api.js";
 
 const drag_info = document.querySelector(".drop_info");
 const dropfile_button = document.querySelector("#dropfile_button");
@@ -130,9 +132,7 @@ const draganddropFeature = ()=>{
 
     const fileHandling = (e)=>{
 
-    
-
-    //    e.stopPropagation();
+   
        let files = e.dataTransfer.files[0];
        
        if(files.type != "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"){
@@ -208,29 +208,10 @@ const draganddropFeature = ()=>{
             drop_mail_list.textContent = mailArray.toString().split(",").join("  ,  ").toString();
             // 
 
-            fetch("/api/emailfile", {method: "POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(mailArray)})
-            .then(response=>{
-
-                if(!response.ok){
-                    return response.json().then(data=>{throw data});
-                }
-
-                  return response.json();
-
-                }
-            )
-            .then(data=>{
-                 // NOTE
-                 console.log("data", data);
-        
-                 showError("info",`${data.Message}`);}
-                )
-            .catch(error=>{
-                
-                console.log("error",error);
-                 showError("error",`${error.Message}`)
-            }
-                );
+            //////////////////////// Calling fetch api to send mail to server=> Method :Post//////////////////////
+            mailsArraytoServer(mailArray)
+            ;
+          
 
         }else{
             // NOTE
@@ -264,7 +245,7 @@ const draganddropFeature = ()=>{
         drag_info.addEventListener(each,onLeave);
     });
 
-
+// To handle the data of file
     drag_info.addEventListener("drop", fileHandling);
 
 };
@@ -324,6 +305,11 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
         }; 
     };
 
+    [[senderEmail,"senderEmail"],[senderP,"senderP"],[subjectInput,"subject"],[mailbox,"mail"]].forEach(each=>{
+        each[0].addEventListener("blur",()=>{
+            handleInput(each[1]);
+        });
+    })
  
 
     //When clicking send mail button, it send all the user input data to the server
@@ -333,26 +319,9 @@ let UserData = { fromEmail: "", fromP: "", subject:"", mail:""};
         if(UserData.fromEmail != ""  && UserData.fromP != "" && UserData.subject != "" && UserData.mail != "" && mailArray.length != 0){
 
 
-            fetch("/api/userfile" ,{method: "POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(UserData)})
-            .then(response=>{
-
-                if(!response.ok){
-                    return response.json().then(data=>{throw data});
-                }
-               return response.json()
-            })
-        .then(data=>{
-             // NOTE
-             console.log(data)
-            showError("info",`${data.Message}`)
-        })
-            .catch(error=>{
-
-                console.log(error);
-                 // NOTE
-                 showError("error",`${error.Message}`)
-              }
-                );
+            //////////////////////// API to send user input data in input field to server ////////////////////////
+            sendMailToServer(UserData);
+ 
 
         }else{
           
@@ -442,5 +411,6 @@ info_container.addEventListener("click",()=>{
 
 
 
+export {showError}
 
 
