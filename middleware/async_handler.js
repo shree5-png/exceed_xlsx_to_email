@@ -1,15 +1,14 @@
 
-const __async = (fn)=>{
+export const __async = (fn) => {
 
-    return async (req,res,next)=>{
+    return async (req, res, next) => {
 
-        try{
-            await fn(req,res,next);
+        try {
+            await fn(req, res, next);
 
-        }catch(error){
+        } catch (error) {
             next(error);
         }
     }
 };
 
-module.exports = __async;

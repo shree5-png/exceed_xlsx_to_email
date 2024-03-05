@@ -1,12 +1,15 @@
-const express = require("express");
+
+import express from "express";
 const app = express();
-const router = require("./routers/index");
-const errorHandle = require("./middleware/error_handle");
-const notFound = require("./middleware/not_found_middleware");
+import { router } from "./routers/index.js";
+import { errorHandle } from "./middleware/error_handle.js";
+import { notFound } from "./middleware/not_found_middleware.js";
+import open from "open";
+
 
 //Middleware 
 app.use(express.json());
-app.use("/api",router);
+app.use("/api", router);
 
 app.use(express.static("public"));
 //Error handling middleware
@@ -17,21 +20,23 @@ app.use(notFound);
 const PORT = process.env.PORT || 5000;
 
 //Starting the server
-const start = ()=>{
+const start = () => {
 
     try {
 
-        app.listen(PORT,()=>{
+        app.listen(PORT, async () => {
 
             console.log(`Listening on Port ${PORT}`);
+            await open(`http://localhost:${PORT}`);
+
         })
-        
+
     } catch (error) {
 
         console.log(error);
-        
+
     }
-  
+
 }
 
 start();

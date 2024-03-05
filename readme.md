@@ -20,6 +20,10 @@
 
 >**Run**
 
+*It will automatically open in your default browser*<br>
+
+or<br>
+
 *on your favourite browser*<br>
 `localhost:5000`<br>
 
