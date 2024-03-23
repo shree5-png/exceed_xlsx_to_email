@@ -27,7 +27,7 @@ const start = () => {
         app.listen(PORT, async () => {
 
             console.log(`Listening on Port ${PORT}`);
-            await open(`http://localhost:${PORT}`);
+            await open(`http://localhost:${PORT}`, { wait: false });
 
         })
 

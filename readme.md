@@ -1,6 +1,6 @@
 # Exceed <br>
 
-*Exceed is an interactive web app, where you can send an email to multiple people listed on your spreadsheet file, Just drag and drop. To,From,Subject,Mail -> all yours, just enter.*
+*Exceed is an interactive web app, where you can send any email to multiple people listed on your spreadsheet file, Just drag and drop.*
 
 ![Images](readme_img.png)<br>
 
